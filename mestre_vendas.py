@@ -269,6 +269,19 @@ elif st.session_state.etapa == "App":
     _nav_idx = _nav_pgs.index(st.session_state.pagina) if st.session_state.pagina in _nav_pgs else 0
     if '_menu_open' not in st.session_state: st.session_state['_menu_open'] = False
 
+    st.markdown("""<style>
+    [data-testid="column"]:nth-child(1) button,
+    [data-testid="column"]:nth-child(3) button,
+    [data-testid="column"]:nth-child(4) button {
+        background: #F8F9FA !important;
+        color: #1A1A2E !important;
+        height: 2em !important;
+        font-size: 14px !important;
+        padding: 2px 8px !important;
+        border: 1px solid #DEE2E6 !important;
+        border-radius: 6px !important;
+    }
+    </style>""", unsafe_allow_html=True)
     _cl, _cc, _cr, _cm = st.columns([1, 6, 1, 1])
     with _cl:
         if st.button("‹", key="nav_prev", use_container_width=True, disabled=_nav_idx==0):
