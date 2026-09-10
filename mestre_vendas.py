@@ -221,6 +221,7 @@ def barra_salvar():
             file_name=f"mestre_vendas_{nome_usuario}.json",
             mime="application/json",
             use_container_width=True,
+            key="mv_a5"
         )
     st.markdown("<hr class='divider'>", unsafe_allow_html=True)
     st.markdown("""<style>
@@ -262,110 +263,11 @@ if st.session_state.etapa == "Login":
 elif st.session_state.etapa == "App":
 
 
-    # NAVBAR
-    _nav_pgs = ['Home', 'Diagnostico', 'ModeloVenda', 'Oferta', 'Precificacao', 'Avatar', 'Copy', 'Conteudo', 'Criativos', 'Fechamento', 'Atendimento', 'Marketplace', 'Loja', 'Trafego', 'Local', 'Escala', 'Validacao', 'Auditoria', 'Estoque', 'Branding', 'Funil', 'TesteAB', 'Gamificacao', 'SimuladorVendas', 'KitLancamento', 'OQueFazer', 'FazPorMim', 'Mentor', 'MeuNegocio', 'Salvos']
-    _nav_ics = ['🏠', '🧠', '🎯', '🛒', '💰', '👤', '✍️', '📱', '🎥', '💬', '🤖', '🛍️', '🌐', '📢', '📍', '📈', '🧪', '📊', '📦', '💎', '🔬', '🧪2', '🎮', '🎯2', '🚀', '❓', '🤖2', '🧠2', '📚', '💾']
-    _nav_lbs = ['Painel Principal', 'Diagnóstico Inteligente', 'Modelo de Venda', 'Estratégia de Oferta', 'Precificação', 'Cliente Ideal', 'Copy e Persuasão', 'Conteúdo', 'Criativos', 'Fechamento', 'Atendimento Auto', 'Marketplace', 'Loja Virtual', 'Tráfego Pago', 'Vendas Locais', 'Escalar', 'Validação do Produto', 'Auditoria', 'Gestão de Estoque', 'Branding', 'Funil de Vendas', 'Testes A/B', 'Gamificação e Conquistas', 'Simulador de Vendas', 'Kit de Lançamento', 'O que faço agora?', 'Faça por mim', 'Mentor 24h', 'Meu Negócio — Histórico', 'Materiais Salvos']
-    _nav_idx = _nav_pgs.index(st.session_state.pagina) if st.session_state.pagina in _nav_pgs else 0
-    if '_menu_open' not in st.session_state: st.session_state['_menu_open'] = False
 
-    st.markdown("""<style>
-    [data-testid="column"]:nth-child(1) button,
-    [data-testid="column"]:nth-child(3) button,
-    [data-testid="column"]:nth-child(4) button {
-        background: #F8F9FA !important;
-        color: #1A1A2E !important;
-        height: 2em !important;
-        font-size: 14px !important;
-        padding: 2px 8px !important;
-        border: 1px solid #DEE2E6 !important;
-        border-radius: 6px !important;
-    }
-    </style>""", unsafe_allow_html=True)
-    _cl, _cc, _cr, _cm = st.columns([1, 6, 1, 1])
-    with _cl:
-        if st.button("‹", key="nav_prev", use_container_width=True, disabled=_nav_idx==0):
-            st.session_state.pagina = _nav_pgs[_nav_idx-1]; st.rerun()
-    with _cc:
-        st.markdown(f"<div style='text-align:center;padding:7px 0;font-weight:700;font-size:0.95em;color:#1A1A2E;'>{_nav_lbs[_nav_idx]}<br><span style='font-size:0.65em;color:#94A3B8;'>{_nav_idx+1}/{len(_nav_pgs)}</span></div>", unsafe_allow_html=True)
-    with _cr:
-        if st.button("›", key="nav_next", use_container_width=True, disabled=_nav_idx==len(_nav_pgs)-1):
-            st.session_state.pagina = _nav_pgs[_nav_idx+1]; st.rerun()
-    with _cm:
-        if st.button("📋", key="nav_menu", use_container_width=True):
-            st.session_state['_menu_open'] = not st.session_state['_menu_open']; st.rerun()
+    # TABS — navegação nativa
+    (_tab_Home, _tab_Diagnostico, _tab_ModeloVenda, _tab_Oferta, _tab_Precificacao, _tab_Avatar, _tab_Copy, _tab_Conteudo, _tab_Criativos, _tab_Fechamento, _tab_Atendimento, _tab_Marketplace, _tab_Loja, _tab_Trafego, _tab_Local, _tab_Escala, _tab_Validacao, _tab_Auditoria, _tab_Estoque, _tab_Branding, _tab_Funil, _tab_TesteAB, _tab_Gamificacao, _tab_SimuladorVendas, _tab_KitLancamento, _tab_OQueFazer, _tab_FazPorMim, _tab_Mentor, _tab_MeuNegocio, _tab_Salvos) = st.tabs(['🏠 Painel', '🧠 Diagnóstico', '🎯 Modelo Venda', '🛒 Oferta', '💰 Preço', '👤 Avatar', '✍️ Copy', '📱 Conteúdo', '🎥 Criativos', '💬 Fechamento', '🤖 Atendimento', '🛍️ Marketplace', '🌐 Loja Virtual', '📢 Tráfego', '📍 Local', '📈 Escalar', '🧪 Validação', '📊 Auditoria', '📦 Estoque', '💎 Branding', '🔬 Funil', '🧪 Testes A/B', '🎮 Gamificação', '🎯 Simulador', '🚀 Lançamento', '❓ O que fazer?', '🤖 Faz por mim', '🧠 Mentor 24h', '📚 Meu Negócio', '💾 Salvos'])
 
-    if st.session_state['_menu_open']:
-        _d1 = st.columns(7)
-        if _d1[0].button("🏠", key="dk1_Home", help="Painel Principal", use_container_width=True): st.session_state.pagina="Home"; st.rerun()
-        if _d1[1].button("🧠", key="dk1_Diagnostico", help="Diagnóstico Inteligente", use_container_width=True): st.session_state.pagina="Diagnostico"; st.rerun()
-        if _d1[2].button("🎯", key="dk1_ModeloVenda", help="Modelo de Venda", use_container_width=True): st.session_state.pagina="ModeloVenda"; st.rerun()
-        if _d1[3].button("🛒", key="dk1_Oferta", help="Estratégia de Oferta", use_container_width=True): st.session_state.pagina="Oferta"; st.rerun()
-        if _d1[4].button("💰", key="dk1_Precificacao", help="Precificação", use_container_width=True): st.session_state.pagina="Precificacao"; st.rerun()
-        if _d1[5].button("👤", key="dk1_Avatar", help="Cliente Ideal", use_container_width=True): st.session_state.pagina="Avatar"; st.rerun()
-        if _d1[6].button("✍️", key="dk1_Copy", help="Copy e Persuasão", use_container_width=True): st.session_state.pagina="Copy"; st.rerun()
-        _d2 = st.columns(7)
-        if _d2[0].button("📱", key="dk2_Conteudo", help="Conteúdo", use_container_width=True): st.session_state.pagina="Conteudo"; st.rerun()
-        if _d2[1].button("🎥", key="dk2_Criativos", help="Criativos", use_container_width=True): st.session_state.pagina="Criativos"; st.rerun()
-        if _d2[2].button("💬", key="dk2_Fechamento", help="Fechamento", use_container_width=True): st.session_state.pagina="Fechamento"; st.rerun()
-        if _d2[3].button("🤖", key="dk2_Atendimento", help="Atendimento Auto", use_container_width=True): st.session_state.pagina="Atendimento"; st.rerun()
-        if _d2[4].button("🛍️", key="dk2_Marketplace", help="Marketplace", use_container_width=True): st.session_state.pagina="Marketplace"; st.rerun()
-        if _d2[5].button("🌐", key="dk2_Loja", help="Loja Virtual", use_container_width=True): st.session_state.pagina="Loja"; st.rerun()
-        if _d2[6].button("📢", key="dk2_Trafego", help="Tráfego Pago", use_container_width=True): st.session_state.pagina="Trafego"; st.rerun()
-        _d3 = st.columns(7)
-        if _d3[0].button("📍", key="dk3_Local", help="Vendas Locais", use_container_width=True): st.session_state.pagina="Local"; st.rerun()
-        if _d3[1].button("📈", key="dk3_Escala", help="Escalar", use_container_width=True): st.session_state.pagina="Escala"; st.rerun()
-        if _d3[2].button("🧪", key="dk3_Validacao", help="Validação do Produto", use_container_width=True): st.session_state.pagina="Validacao"; st.rerun()
-        if _d3[3].button("📊", key="dk3_Auditoria", help="Auditoria", use_container_width=True): st.session_state.pagina="Auditoria"; st.rerun()
-        if _d3[4].button("📦", key="dk3_Estoque", help="Gestão de Estoque", use_container_width=True): st.session_state.pagina="Estoque"; st.rerun()
-        if _d3[5].button("💎", key="dk3_Branding", help="Branding", use_container_width=True): st.session_state.pagina="Branding"; st.rerun()
-        if _d3[6].button("🔬", key="dk3_Funil", help="Funil de Vendas", use_container_width=True): st.session_state.pagina="Funil"; st.rerun()
-        _d4 = st.columns(7)
-        if _d4[0].button("🧪2", key="dk4_TesteAB", help="Testes A/B", use_container_width=True): st.session_state.pagina="TesteAB"; st.rerun()
-        if _d4[1].button("🎮", key="dk4_Gamificacao", help="Gamificação e Conquistas", use_container_width=True): st.session_state.pagina="Gamificacao"; st.rerun()
-        if _d4[2].button("🎯2", key="dk4_SimuladorVendas", help="Simulador de Vendas", use_container_width=True): st.session_state.pagina="SimuladorVendas"; st.rerun()
-        if _d4[3].button("🚀", key="dk4_KitLancamento", help="Kit de Lançamento", use_container_width=True): st.session_state.pagina="KitLancamento"; st.rerun()
-        if _d4[4].button("❓", key="dk4_OQueFazer", help="O que faço agora?", use_container_width=True): st.session_state.pagina="OQueFazer"; st.rerun()
-        if _d4[5].button("🤖2", key="dk4_FazPorMim", help="Faça por mim", use_container_width=True): st.session_state.pagina="FazPorMim"; st.rerun()
-        if _d4[6].button("🧠2", key="dk4_Mentor", help="Mentor 24h", use_container_width=True): st.session_state.pagina="Mentor"; st.rerun()
-        _d5 = st.columns(2)
-        if _d5[0].button("📚", key="dk5_MeuNegocio", help="Meu Negócio — Histórico", use_container_width=True): st.session_state.pagina="MeuNegocio"; st.rerun()
-        if _d5[1].button("💾", key="dk5_Salvos", help="Materiais Salvos", use_container_width=True): st.session_state.pagina="Salvos"; st.rerun()
-
-    st.markdown("<hr class='divider'>", unsafe_allow_html=True)
-
-    # ── PERFIL DO PRODUTO ─────────────────────────────────────
-    with st.expander("⚙️ Seu produto (clique para configurar)", expanded=(not st.session_state.produto_padrao)):
-        col_pa, col_pb, col_pc, col_pd = st.columns(4)
-        with col_pa:
-            st.session_state.produto_padrao = st.text_input("📦 Seu produto:", value=st.session_state.produto_padrao, placeholder="ex: creme para cabelo cacheado", key="text_input___Seu_produto__L367")
-            st.session_state.nicho_padrao   = st.text_input("🎯 Nicho:", value=st.session_state.nicho_padrao, placeholder="ex: beleza, fitness, pet...", key="text_input___Nicho__L368")
-        with col_pb:
-            st.session_state.preco_custo  = st.number_input("💸 Custo do produto (R$):", min_value=0.0, value=float(st.session_state.preco_custo), step=0.5, key="number_input___Custo_do_produto__R____L370")
-            st.session_state.preco_venda  = st.number_input("💰 Preço de venda (R$):", min_value=0.0, value=float(st.session_state.preco_venda), step=0.5, key="number_input___Pre_o_de_venda__R____L371")
-        with col_pc:
-            st.session_state.canal_padrao = st.selectbox("📲 Canal principal:", [
-                "WhatsApp","Instagram","Mercado Livre","Shopee","Loja própria","TikTok Shop","Físico/loja","Múltiplos canais"
-            ], index=["WhatsApp","Instagram","Mercado Livre","Shopee","Loja própria","TikTok Shop","Físico/loja","Múltiplos canais"].index(
-                st.session_state.canal_padrao) if st.session_state.canal_padrao in
-                ["WhatsApp","Instagram","Mercado Livre","Shopee","Loja própria","TikTok Shop","Físico/loja","Múltiplos canais"] else 0, key="widget_multi_1")
-        with col_pd:
-            if st.session_state.preco_custo > 0 and st.session_state.preco_venda > 0:
-                margem = round((st.session_state.preco_venda - st.session_state.preco_custo) / st.session_state.preco_venda * 100, 1)
-                lucro  = round(st.session_state.preco_venda - st.session_state.preco_custo, 2)
-                cor    = "#059669" if margem >= 40 else ("#B45309" if margem >= 20 else "#B91C1C")
-                st.markdown(f"""<div style='background:#FFF8F0;border:2px solid {cor};border-radius:12px;padding:14px;text-align:center;'>
-                <div style='font-size:1.8em;font-weight:700;color:{cor};'>R${lucro:.2f}</div>
-                <div style='font-size:0.85em;'>lucro por venda</div>
-                <div style='font-size:1.2em;font-weight:700;color:{cor};'>{margem}% margem</div>
-                </div>""", unsafe_allow_html=True)
-
-    st.markdown("<hr class='divider'>", unsafe_allow_html=True)
-
-    # ========================
-    # HOME
-    # ========================
-    if st.session_state.pagina == "Home":
+    with _tab_Home:
         col_u, col_r = st.columns([3, 1])
         with col_u:
             st.title(f"Bora vender mais, {st.session_state.usuario}! 📦")
@@ -440,10 +342,11 @@ elif st.session_state.etapa == "App":
                     unsafe_allow_html=True
                 )
 
-    # ========================
-    # DIAGNÓSTICO
-    # ========================
-    elif st.session_state.pagina == "Diagnostico":
+        # ========================
+        # DIAGNÓSTICO
+        # ========================
+
+    with _tab_Diagnostico:
         st.header("🧠 Diagnóstico Inteligente do Negócio")
         st.markdown("*A IA analisa seus números reais e diz exatamente o que você precisa fazer.*")
 
@@ -583,7 +486,7 @@ elif st.session_state.etapa == "App":
             col_dl, col_sv = st.columns(2)
             with col_dl:
                 st.download_button("📋 Baixar diagnóstico (.txt)", data=st.session_state['diag_temp'],
-                    file_name="diagnostico.txt", mime="text/plain", use_container_width=True)
+                    file_name="diagnostico.txt", mime="text/plain", use_container_width=True, key="mv_a4")
             with col_sv:
                 if st.button("💾 Salvar", use_container_width=True, key="mestreve19"):
                     st.session_state.materiais_salvos.append({
@@ -591,10 +494,11 @@ elif st.session_state.etapa == "App":
                         'conteudo':st.session_state['diag_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # MODELO DE VENDA
-    # ========================
-    elif st.session_state.pagina == "ModeloVenda":
+        # ========================
+        # MODELO DE VENDA
+        # ========================
+
+    with _tab_ModeloVenda:
         st.header("🎯 Escolha do Melhor Modelo de Venda")
         st.markdown("A IA define o melhor caminho para o seu produto e situação.")
 
@@ -653,10 +557,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Modelo de Venda','produto':produto_m if 'produto_m' in dir() else '','conteudo':st.session_state['modelo_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # ESTRATÉGIA DE OFERTA
-    # ========================
-    elif st.session_state.pagina == "Oferta":
+        # ========================
+        # ESTRATÉGIA DE OFERTA
+        # ========================
+
+    with _tab_Oferta:
         st.header("🛒 Estratégia de Oferta Irresistível")
         st.markdown("A IA cria sua oferta completa — do kit ao upsell, do brinde à escassez.")
 
@@ -717,10 +622,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Oferta','produto':produto_o if 'produto_o' in dir() else '','conteudo':st.session_state['oferta_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # PRECIFICAÇÃO
-    # ========================
-    elif st.session_state.pagina == "Precificacao":
+        # ========================
+        # PRECIFICAÇÃO
+        # ========================
+
+    with _tab_Precificacao:
         st.header("💰 Precificação Inteligente")
         st.markdown("Calcule o preço ideal, margem real, ponto de equilíbrio e projeção de lucro.")
 
@@ -804,10 +710,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Precificação','produto':produto_prec if 'produto_prec' in dir() else '','conteudo':st.session_state['prec_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # AVATAR DO CLIENTE
-    # ========================
-    elif st.session_state.pagina == "Avatar":
+        # ========================
+        # AVATAR DO CLIENTE
+        # ========================
+
+    with _tab_Avatar:
         st.header("👤 Avatar do Cliente Ideal")
         st.markdown("Perfil profundo do seu comprador — para falar a língua certa e converter mais.")
 
@@ -885,10 +792,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Avatar','produto':produto_av if 'produto_av' in dir() else '','conteudo':st.session_state['avatar_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # COPY
-    # ========================
-    elif st.session_state.pagina == "Copy":
+        # ========================
+        # COPY
+        # ========================
+
+    with _tab_Copy:
         st.header("✍️ Copy para Produto Físico")
         st.markdown("Textos prontos que vendem — do título à descrição completa.")
 
@@ -943,10 +851,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Copy','produto':produto_c if 'produto_c' in dir() else '','conteudo':st.session_state['copy_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # CONTEÚDO
-    # ========================
-    elif st.session_state.pagina == "Conteudo":
+        # ========================
+        # CONTEÚDO
+        # ========================
+
+    with _tab_Conteudo:
         st.header("📱 Conteúdo para Redes Sociais")
         st.markdown("Posts, reels, stories e calendário editorial para vender sem parecer que está vendendo.")
 
@@ -1007,10 +916,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Conteúdo','produto':produto_ct if 'produto_ct' in dir() else '','conteudo':st.session_state['cont_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # CRIATIVOS
-    # ========================
-    elif st.session_state.pagina == "Criativos":
+        # ========================
+        # CRIATIVOS
+        # ========================
+
+    with _tab_Criativos:
         st.header("🎥 Criativos para Anúncios")
         st.markdown("Scripts UGC, ângulos de venda e estrutura de anúncio vencedor.")
 
@@ -1069,10 +979,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Criativos','produto':produto_cr if 'produto_cr' in dir() else '','conteudo':st.session_state['cri_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # FECHAMENTO
-    # ========================
-    elif st.session_state.pagina == "Fechamento":
+        # ========================
+        # FECHAMENTO
+        # ========================
+
+    with _tab_Fechamento:
         st.header("💬 Fechamento de Vendas")
         st.markdown("Scripts prontos para WhatsApp/Instagram + quebra de objeções que funcionam de verdade.")
 
@@ -1180,10 +1091,11 @@ elif st.session_state.etapa == "App":
                         st.session_state.materiais_salvos.append({'tipo':'Quebra de Objeções','produto':produto_obj,'conteudo':st.session_state['obj_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                         st.success("✅ Salvo!")
 
-    # ========================
-    # ATENDIMENTO
-    # ========================
-    elif st.session_state.pagina == "Atendimento":
+        # ========================
+        # ATENDIMENTO
+        # ========================
+
+    with _tab_Atendimento:
         st.header("🤖 Atendimento Automático")
         st.markdown("FAQ, respostas automáticas e scripts humanizados para escalar sem perder qualidade.")
 
@@ -1245,10 +1157,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Atendimento','produto':produto_at if 'produto_at' in dir() else '','conteudo':st.session_state['at_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # MARKETPLACE
-    # ========================
-    elif st.session_state.pagina == "Marketplace":
+        # ========================
+        # MARKETPLACE
+        # ========================
+
+    with _tab_Marketplace:
         st.header("🛍️ Marketplace Expert")
         st.markdown("Estratégias para dominar Mercado Livre, Shopee, Amazon e Magalu.")
 
@@ -1310,10 +1223,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Marketplace','produto':produto_mk if 'produto_mk' in dir() else '','conteudo':st.session_state['mk_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # LOJA VIRTUAL
-    # ========================
-    elif st.session_state.pagina == "Loja":
+        # ========================
+        # LOJA VIRTUAL
+        # ========================
+
+    with _tab_Loja:
         st.header("🌐 Loja Virtual Expert")
         st.markdown("Otimização completa da sua loja — do produto ao checkout.")
 
@@ -1371,10 +1285,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Loja Virtual','produto':produto_lv if 'produto_lv' in dir() else '','conteudo':st.session_state['lv_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # TRÁFEGO PAGO
-    # ========================
-    elif st.session_state.pagina == "Trafego":
+        # ========================
+        # TRÁFEGO PAGO
+        # ========================
+
+    with _tab_Trafego:
         st.header("📢 Tráfego Pago")
         st.markdown("Estratégia completa de anúncios — do orçamento inicial à escala.")
 
@@ -1437,10 +1352,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Tráfego Pago','produto':produto_tp if 'produto_tp' in dir() else '','conteudo':st.session_state['tp_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # VENDAS LOCAIS
-    # ========================
-    elif st.session_state.pagina == "Local":
+        # ========================
+        # VENDAS LOCAIS
+        # ========================
+
+    with _tab_Local:
         st.header("📍 Vendas Locais")
         st.markdown("Estratégias para dominar seu bairro, cidade e região.")
 
@@ -1508,10 +1424,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Vendas Locais','produto':produto_loc if 'produto_loc' in dir() else '','conteudo':st.session_state['loc_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # ESCALA
-    # ========================
-    elif st.session_state.pagina == "Escala":
+        # ========================
+        # ESCALA
+        # ========================
+
+    with _tab_Escala:
         st.header("📈 Escala do Negócio")
         st.markdown("Como ir de vendas manuais para um negócio que funciona sozinho.")
 
@@ -1569,10 +1486,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Escala','produto':produto_es if 'produto_es' in dir() else '','conteudo':st.session_state['esc_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # VALIDAÇÃO
-    # ========================
-    elif st.session_state.pagina == "Validacao":
+        # ========================
+        # VALIDAÇÃO
+        # ========================
+
+    with _tab_Validacao:
         st.header("🧪 Validação de Produto")
         st.markdown("Antes de investir — vale a pena mesmo vender isso?")
 
@@ -1633,10 +1551,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Validação','produto':produto_val if 'produto_val' in dir() else '','conteudo':st.session_state['val_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # AUDITORIA
-    # ========================
-    elif st.session_state.pagina == "Auditoria":
+        # ========================
+        # AUDITORIA
+        # ========================
+
+    with _tab_Auditoria:
         st.header("📊 Auditoria Completa")
         st.markdown("Por que não estou vendendo? A IA encontra o gargalo.")
 
@@ -1701,10 +1620,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Auditoria','produto':produto_au if 'produto_au' in dir() else '','conteudo':st.session_state['audit_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # ESTOQUE
-    # ========================
-    elif st.session_state.pagina == "Estoque":
+        # ========================
+        # ESTOQUE
+        # ========================
+
+    with _tab_Estoque:
         st.header("📦 Gestão de Estoque")
         st.markdown("Giro, produto parado, previsão de compra e organização simples.")
 
@@ -1765,10 +1685,11 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Estoque','produto':produto_est if 'produto_est' in dir() else '','conteudo':st.session_state['est_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # BRANDING
-    # ========================
-    elif st.session_state.pagina == "Branding":
+        # ========================
+        # BRANDING
+        # ========================
+
+    with _tab_Branding:
         st.header("💎 Branding e Identidade de Marca")
         st.markdown("Nome, slogan, posicionamento e comunicação que criam fãs — não só compradores.")
 
@@ -1833,10 +1754,412 @@ elif st.session_state.etapa == "App":
                     st.session_state.materiais_salvos.append({'tipo':'Branding','produto':produto_br2 if 'produto_br2' in dir() else '','conteudo':st.session_state['brand_temp'],'data':datetime.now().strftime('%d/%m %H:%M')})
                     st.success("✅ Salvo!")
 
-    # ========================
-    # MENTOR 24H
-    # ========================
-    elif st.session_state.pagina == "Mentor":
+        # ========================
+        # MENTOR 24H
+        # ========================
+
+    with _tab_Funil:
+        st.header("📊 Funil de Vendas")
+        st.markdown("*Visualize onde você está perdendo clientes e qual é o maior gargalo.*")
+
+        col1, col2 = st.columns(2)
+        with col1:
+            f_views    = st.number_input("👁️ Pessoas que viram o anúncio:", min_value=0, value=1000, key="mestreve59")
+            f_clicks   = st.number_input("🖱️ Pessoas que clicaram:", min_value=0, value=100, key="mestreve60")
+            f_msgs     = st.number_input("💬 Mandaram mensagem/perguntaram:", min_value=0, value=30, key="mestreve61")
+        with col2:
+            f_vendas   = st.number_input("💰 Compraram:", min_value=0, value=3, key="mestreve62")
+            f_periodo  = st.selectbox("📅 Período:", ["7 dias","15 dias","30 dias","60 dias"], key="mestreve63")
+            f_invest   = st.number_input("💸 Investimento no período (R$):", min_value=0.0, value=0.0, key="mestreve64")
+
+        if st.button("📊 ANALISAR MEU FUNIL", use_container_width=True, key="mestreve65"):
+            with st.spinner("Analisando..."):
+                ctr  = round(f_clicks/f_views*100,1) if f_views>0 else 0
+                conv = round(f_vendas/f_clicks*100,1) if f_clicks>0 else 0
+                cac  = round(f_invest/f_vendas,2) if f_vendas>0 and f_invest>0 else 0
+                receita = f_vendas * st.session_state.preco_venda
+                lucro_f = f_vendas * (st.session_state.preco_venda - st.session_state.preco_custo)
+
+                # Visual do funil
+                st.markdown(f"""
+                <div style='background:#FFF8F0;border:2px solid #F97316;border-radius:14px;padding:20px;margin-bottom:16px;'>
+                    <div style='text-align:center;font-weight:700;color:#C2410C;margin-bottom:16px;'>📊 SEU FUNIL — {f_periodo}</div>
+                    <div style='text-align:center;'><div style='background:#FED7AA;border-radius:8px;padding:10px;margin:4px auto;width:100%;'><strong style='color:#C2410C;'>{f_views:,}</strong> <span style='color:#92400E;font-size:0.85em;'>viram o anúncio</span></div></div>
+                    <div style='text-align:center;color:#C2410C;'>↓ CTR: {ctr}%</div>
+                    <div style='text-align:center;'><div style='background:#FDBA74;border-radius:8px;padding:10px;margin:4px auto;width:{max(10,int(f_clicks/max(f_views,1)*100))}%;'><strong style='color:#9A3412;'>{f_clicks:,}</strong> <span style='color:#92400E;font-size:0.85em;'>clicaram</span></div></div>
+                    <div style='text-align:center;color:#C2410C;'>↓</div>
+                    <div style='text-align:center;'><div style='background:#FB923C;border-radius:8px;padding:10px;margin:4px auto;width:{max(5,int(f_msgs/max(f_views,1)*100))}%;'><strong style='color:#fff;'>{f_msgs:,}</strong> <span style='color:#fff;font-size:0.85em;'>perguntaram</span></div></div>
+                    <div style='text-align:center;color:#C2410C;'>↓ Conversão: {conv}%</div>
+                    <div style='text-align:center;'><div style='background:#C2410C;border-radius:8px;padding:10px;margin:4px auto;width:{max(3,int(f_vendas/max(f_views,1)*100))}%;'><strong style='color:#fff;'>{f_vendas:,}</strong> <span style='color:#fff;font-size:0.85em;'>compraram</span></div></div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                prompt = (
+                    f"Analise este funil de vendas e identifique o maior gargalo.\n"
+                    f"Produto: {st.session_state.produto_padrao}. Período: {f_periodo}.\n"
+                    f"Visualizações: {f_views} | Cliques: {f_clicks} (CTR: {ctr}%)\n"
+                    f"Mensagens: {f_msgs} | Vendas: {f_vendas} (Conversão: {conv}%)\n"
+                    f"Investimento: R${f_invest:.2f} | CAC: R${cac:.2f} | Receita: R${receita:.2f} | Lucro: R${lucro_f:.2f}\n\n"
+                    f"FORMATO:\n\n"
+                    f"📊 ANÁLISE DO FUNIL\n\n"
+                    f"| Métrica | Valor | Benchmark |\n|---|---|---|\n"
+                    f"| CTR | {ctr}% | [referência] |\n"
+                    f"| Taxa de conversão | {conv}% | [referência] |\n"
+                    f"| CAC | R${cac:.2f} | [referência] |\n\n"
+                    f"🔴 MAIOR GARGALO:\n[onde está perdendo mais e por quê]\n\n"
+                    f"🎯 3 AÇÕES PARA MELHORAR O FUNIL:\n[ações específicas e práticas]\n\n"
+                    f"🎯 PRÓXIMA AÇÃO:\n[o que fazer hoje]"
+                )
+                res = vendas_ia(prompt)
+                st.markdown(res)
+                salvar_analise("Funil", st.session_state.produto_padrao, res)
+
+        # ──────────────────────────────────────────
+        # TESTES A/B
+        # ──────────────────────────────────────────
+
+    with _tab_TesteAB:
+        st.header("🧪 Testes A/B")
+        st.markdown("*Compare duas versões e descubra qual converte mais.*")
+
+        tab_criar, tab_hist = st.tabs(["➕ Novo Teste","📋 Histórico"])
+
+        with tab_criar:
+            tipo_ab = st.selectbox("O que você quer testar?", ["Título/Headline","Preço","Oferta","Imagem/Criativo","Copy do anúncio","Descrição do produto"], key="mestreve66")
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown("**🅰️ Versão A**")
+                versao_a = st.text_area("Descreva a versão A:", height=100, key="ab_versao_a", placeholder="ex: Preço R$35 com frete grátis")
+                views_a  = st.number_input("👁️ Visualizações A:", min_value=0, value=0, key="ab_views_a")
+                vendas_a = st.number_input("💰 Vendas A:", min_value=0, value=0, key="ab_vendas_a")
+            with col2:
+                st.markdown("**🅱️ Versão B**")
+                versao_b = st.text_area("Descreva a versão B:", height=100, key="ab_versao_b", placeholder="ex: Preço R$39,90 com brinde")
+                views_b  = st.number_input("👁️ Visualizações B:", min_value=0, value=0, key="ab_views_b")
+                vendas_b = st.number_input("💰 Vendas B:", min_value=0, value=0, key="ab_vendas_b")
+
+            if st.button("🏆 ANALISAR E DECLARAR VENCEDORA", use_container_width=True, key="mestreve67"):
+                conv_a = round(vendas_a/views_a*100,2) if views_a>0 else 0
+                conv_b = round(vendas_b/views_b*100,2) if views_b>0 else 0
+                vencedora = "A" if conv_a > conv_b else ("B" if conv_b > conv_a else "Empate")
+                melhora = abs(round((conv_b-conv_a)/max(conv_a,0.01)*100,1))
+
+                st.markdown(f"""
+                <div style='background:{"#F0FDF4" if vencedora=="B" else "#FFF8F0"};border:2px solid {"#059669" if vencedora=="B" else "#C2410C"};border-radius:14px;padding:18px;margin-bottom:16px;text-align:center;'>
+                    <div style='font-size:1.3em;font-weight:700;color:{"#059669" if vencedora=="B" else "#C2410C"};'>🏆 VENCEDORA: VERSÃO {vencedora}</div>
+                    <div style='color:#1A1A2E;margin-top:8px;'>
+                    Versão A: {conv_a}% conversão &nbsp;|&nbsp; Versão B: {conv_b}% conversão<br>
+                    {"Diferença de " + str(melhora) + "% na conversão" if vencedora != "Empate" else "Resultado muito próximo — teste por mais tempo"}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                if versao_a and versao_b:
+                    with st.spinner("Analisando..."):
+                        prompt = (
+                            f"Analise este teste A/B de {tipo_ab} para {st.session_state.produto_padrao}.\n"
+                            f"Versão A: {versao_a} — {views_a} views, {vendas_a} vendas ({conv_a}%)\n"
+                            f"Versão B: {versao_b} — {views_b} views, {vendas_b} vendas ({conv_b}%)\n\n"
+                            f"Explique por que uma converteu mais, o que aprender com isso, e o próximo teste a fazer."
+                        )
+                        res_ab = vendas_ia(prompt)
+                        st.markdown(res_ab)
+                        st.session_state.mv_testes_ab.append({
+                            'tipo':tipo_ab,'versao_a':versao_a,'versao_b':versao_b,
+                            'conv_a':conv_a,'conv_b':conv_b,'vencedora':vencedora,
+                            'data':datetime.now().strftime('%d/%m %H:%M')
+                        })
+
+        with tab_hist:
+            testes = st.session_state.mv_testes_ab
+            if not testes:
+                st.info("Nenhum teste realizado ainda.")
+            else:
+                for t in reversed(testes[-10:]):
+                    cor = "#059669" if t['vencedora']=="B" else "#C2410C"
+                    st.markdown(f"<div class='hist-item'><span class='badge'>{t['tipo']}</span> <small style='color:#888;'>{t['data']}</small> — 🏆 <strong style='color:{cor};'>Versão {t['vencedora']}</strong> (A:{t['conv_a']}% × B:{t['conv_b']}%)</div>", unsafe_allow_html=True)
+
+        # ──────────────────────────────────────────
+        # GAMIFICAÇÃO
+        # ──────────────────────────────────────────
+
+    with _tab_Gamificacao:
+        st.header("🎮 Gamificação — Sua Jornada")
+
+        niveis = [
+            ("🥉","Iniciante",0),("🥈","Vendedor",3),("🥇","Estrategista",10),
+            ("💎","Especialista",20),("👑","Mestre de Vendas",50)
+        ]
+        total_analises = len(st.session_state.historico_analises)
+        nivel_atual = "🥉 Iniciante"
+        for emoji, nome, minimo in niveis:
+            if total_analises >= minimo:
+                nivel_atual = f"{emoji} {nome}"
+
+        st.markdown(f"""
+        <div style='background:linear-gradient(135deg,#1C0800,#2D1000);border:2px solid #EA580C;
+        border-radius:16px;padding:24px;text-align:center;margin-bottom:20px;'>
+            <div style='color:#FED7AA;font-size:0.8em;letter-spacing:2px;'>SEU NÍVEL</div>
+            <div style='color:#FED7AA;font-size:2.5em;font-weight:700;margin-top:8px;'>{nivel_atual}</div>
+            <div style='color:#FDBA74;font-size:0.9em;margin-top:8px;'>{total_analises} análises realizadas</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        conquistas_def = [
+            ("🏆","Primeiro produto cadastrado", lambda: bool(st.session_state.produto_padrao)),
+            ("📊","Primeiro diagnóstico", lambda: total_analises >= 1),
+            ("💰","Primeira oferta criada", lambda: any(a['tipo']=='Oferta' for a in st.session_state.historico_analises)),
+            ("📢","Primeiro anúncio criado", lambda: any(a['tipo'] in ['Copy','Criativos'] for a in st.session_state.historico_analises)),
+            ("🧪","Primeiro teste A/B", lambda: len(st.session_state.mv_testes_ab) >= 1),
+            ("🎯","5 análises realizadas", lambda: total_analises >= 5),
+            ("🚀","10 análises realizadas", lambda: total_analises >= 10),
+            ("💎","20 análises realizadas", lambda: total_analises >= 20),
+            ("👑","Mestre — 50 análises", lambda: total_analises >= 50),
+        ]
+
+        st.markdown("### 🏆 Conquistas")
+        cols = st.columns(3)
+        for i, (emoji, nome, condicao) in enumerate(conquistas_def):
+            obtida = condicao()
+            cor = "#C2410C" if obtida else "#E5E7EB"
+            lock = "✅" if obtida else "🔒"
+            with cols[i % 3]:
+                st.markdown(f"""
+                <div style='background:#FFFFFF;border:2px solid {cor};border-radius:12px;
+                padding:12px;text-align:center;margin-bottom:8px;opacity:{"1" if obtida else "0.5"};'>
+                    <div style='font-size:1.5em;'>{emoji}</div>
+                    <div style='font-size:0.78em;font-weight:700;color:#1A1A2E;'>{nome}</div>
+                    <div>{lock}</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+        # ──────────────────────────────────────────
+        # SIMULADOR DE VENDAS
+        # ──────────────────────────────────────────
+
+    with _tab_SimuladorVendas:
+        st.header("🎮 Simulador de Vendas")
+        st.markdown("*A IA vira cliente difícil. Você treina o fechamento antes de enfrentar o real.*")
+
+        if 'sim_chat' not in st.session_state: st.session_state.sim_chat = []
+        if 'sim_ativo' not in st.session_state: st.session_state.sim_ativo = False
+        if 'sim_key' not in st.session_state: st.session_state.sim_key = 0
+
+        if not st.session_state.sim_ativo:
+            col1, col2 = st.columns(2)
+            with col1:
+                perfil_cliente = st.selectbox("🎭 Tipo de cliente:", [
+                    "😤 O que acha caro","🤔 O indeciso","😴 O desinteressado",
+                    "🔍 O que pesquisa muito","😡 O reclamão","💬 O que pede desconto",
+                    "🏃 O que some depois de perguntar"
+                ], key="mv_a3")
+            with col2:
+                dificuldade = st.selectbox("💪 Dificuldade:", ["Fácil","Médio","Difícil"], key="mestreve68")
+
+            if st.button("🎮 INICIAR SIMULAÇÃO", use_container_width=True, key="mestreve69"):
+                system_sim = (
+                    f"Você é um cliente difícil simulado para treino de vendas.\n"
+                    f"Produto sendo vendido: {st.session_state.produto_padrao} a R${st.session_state.preco_venda:.2f}.\n"
+                    f"Perfil: {perfil_cliente}. Dificuldade: {dificuldade}.\n"
+                    f"Seja realista — use objeções genuínas. Resposta curta (1-2 frases).\n"
+                    f"Nunca revele que é uma IA. Comece com a primeira objeção ou comportamento típico do perfil."
+                )
+                with st.spinner("Preparando cliente..."):
+                    abertura = vendas_ia("Faça sua primeira fala como esse cliente.", system_sim)
+                    st.session_state.sim_chat = [{"role":"assistant","content":abertura,"system":system_sim}]
+                    st.session_state.sim_ativo = True
+                    st.session_state.sim_perfil = perfil_cliente
+                    st.rerun()
+        else:
+            st.markdown(f"**🎭 Cliente:** {st.session_state.get('sim_perfil','')}")
+            for msg in st.session_state.sim_chat:
+                if msg['role']=='user':
+                    st.markdown(f"<div class='card-green' style='padding:10px 14px;'>**Você:** {msg['content']}</div>", unsafe_allow_html=True)
+                else:
+                    st.markdown(f"<div class='card-red' style='padding:10px 14px;'>**🎭 Cliente:** {msg['content']}</div>", unsafe_allow_html=True)
+
+            msg_sim = st.text_input("Sua resposta:", key=f"sim_input_{st.session_state.sim_key}", placeholder="O que você diria?")
+            col_e, col_f = st.columns([4,1])
+            with col_e:
+                if st.button("📤 RESPONDER", use_container_width=True, key="mestreve70"):
+                    if msg_sim.strip():
+                        hist = [{"role":m["role"],"content":m["content"]} for m in st.session_state.sim_chat]
+                        with st.spinner(""):
+                            try:
+                                client = Groq(api_key=st.session_state.api_key)
+                                msgs = [{"role":"system","content":st.session_state.sim_chat[0]["system"]}] + hist + [{"role":"user","content":msg_sim}]
+                                resp = client.chat.completions.create(messages=msgs, model="openai/gpt-oss-120b", max_tokens=100)
+                                resp_txt = resp.choices[0].message.content.strip()
+                            except Exception as e:
+                                resp_txt = f"⚠️ Erro: {e}"
+                        st.session_state.sim_chat.append({"role":"user","content":msg_sim})
+                        st.session_state.sim_chat.append({"role":"assistant","content":resp_txt})
+                        st.session_state.sim_key += 1
+                        st.rerun()
+            with col_f:
+                if st.button("🏁 Avaliar", use_container_width=True, key="mestreve71"):
+                    hist_txt = "\n".join(f"{'Vendedor' if m['role']=='user' else 'Cliente'}: {m['content']}" for m in st.session_state.sim_chat)
+                    with st.spinner("Avaliando..."):
+                        prompt_av = (
+                            f"Avalie a performance do vendedor nesta simulação de vendas.\n"
+                            f"Produto: {st.session_state.produto_padrao}. Cliente: {st.session_state.get('sim_perfil','')}\n\n"
+                            f"Conversa:\n{hist_txt}\n\n"
+                            f"FORMATO:\n\n"
+                            f"| Critério | Nota |\n|---|---|\n"
+                            f"| Clareza | [X]/10 |\n| Persuasão | [X]/10 |\n"
+                            f"| Empatia | [X]/10 |\n| Argumentação | [X]/10 |\n| Fechamento | [X]/10 |\n\n"
+                            f"🏆 NOTA GERAL: [X]/10\n\n"
+                            f"✅ O que foi bem:\n[feedback]\n\n"
+                            f"⚠️ O que melhorar:\n[feedback específico]\n\n"
+                            f"💡 Como você deveria ter respondido:\n[a resposta ideal para o momento mais crítico]"
+                        )
+                        aval = vendas_ia(prompt_av)
+                        salvar_analise("Simulador", st.session_state.produto_padrao, aval)
+                        st.markdown(aval)
+                        st.session_state.sim_ativo = False
+                        st.session_state.sim_chat = []
+
+        # ──────────────────────────────────────────
+        # O QUE FAÇO AGORA?
+        # ──────────────────────────────────────────
+
+    with _tab_KitLancamento:
+        st.header("🚀 Kit de Lançamento")
+
+        if st.session_state.mv_kit_lancamento:
+            st.success("✅ Seu kit está pronto!")
+            st.markdown(st.session_state.mv_kit_lancamento)
+            col_dl, col_novo = st.columns(2)
+            with col_dl:
+                st.download_button("📋 Baixar kit (.txt)", data=st.session_state.mv_kit_lancamento,
+                    file_name="kit_lancamento.txt", mime="text/plain", use_container_width=True, key="mv_a2")
+            with col_novo:
+                if st.button("🔄 Gerar novo kit", use_container_width=True, key="mestreve77"):
+                    st.session_state.mv_kit_lancamento = None; st.rerun()
+        else:
+            st.info("Você ainda não gerou um kit. Vá para **🤖 Faça Por Mim** e monte seu kit completo.")
+            if st.button("🤖 IR PARA FAÇA POR MIM", use_container_width=True, key="mestreve78"):
+                st.session_state.pagina = "FazPorMim"; st.rerun()
+
+        # ──────────────────────────────────────────
+        # MEU NEGÓCIO — HISTÓRICO
+        # ──────────────────────────────────────────
+
+    with _tab_OQueFazer:
+        st.header("❓ O Que Faço Agora?")
+        st.markdown("*A IA analisa tudo que você já fez e diz exatamente o próximo passo.*")
+
+        analises_feitas = [a['tipo'] for a in st.session_state.historico_analises]
+        feitos = list(set(analises_feitas))
+
+        etapas = ["Diagnóstico","Modelo de Venda","Oferta","Precificação","Avatar","Copy","Criativos","Marketplace","Tráfego"]
+        nao_feitos = [e for e in etapas if not any(e.lower() in f.lower() for f in feitos)]
+
+        st.markdown(f"""
+        <div style='background:#FFF8F0;border:2px solid #F97316;border-radius:12px;padding:16px;margin-bottom:16px;'>
+            <div style='font-weight:700;color:#C2410C;margin-bottom:8px;'>📊 O QUE VOCÊ JÁ FEZ:</div>
+            {"".join(f"<span class='badge-verde' style='margin:2px;'>✅ {f}</span>" for f in feitos) if feitos else "<span style='color:#888;'>Nenhuma análise ainda</span>"}
+        </div>
+        """, unsafe_allow_html=True)
+
+        if st.button("⚡ QUAL É MEU PRÓXIMO PASSO?", use_container_width=True, key="mestreve72"):
+            with st.spinner("Analisando sua situação..."):
+                prompt = (
+                    f"Analise o progresso deste vendedor e diga exatamente o que fazer agora.\n"
+                    f"Produto: {st.session_state.produto_padrao}.\n"
+                    f"Custo: R${st.session_state.preco_custo}. Preço: R${st.session_state.preco_venda}.\n"
+                    f"Já fez: {', '.join(feitos) if feitos else 'nada ainda'}.\n"
+                    f"Ainda não fez: {', '.join(nao_feitos)}.\n\n"
+                    f"FORMATO:\n\n"
+                    f"⚡ SUA PRÓXIMA AÇÃO\n\n"
+                    f"Faça: [ação específica e concreta]\n\n"
+                    f"Por quê? [razão objetiva baseada no que já foi feito]\n\n"
+                    f"Como fazer: [passo a passo simples]\n\n"
+                    f"Tempo estimado: [X minutos]\n\n"
+                    f"Resultado esperado: [o que vai acontecer]\n\n"
+                    f"Depois disso: [qual será o próximo passo após essa ação]"
+                )
+                res = vendas_ia(prompt)
+                st.markdown(f"<div class='card-blue'>{res}</div>", unsafe_allow_html=True)
+
+        # ──────────────────────────────────────────
+        # FAÇA POR MIM
+        # ──────────────────────────────────────────
+
+    with _tab_FazPorMim:
+        st.header("🤖 Faça Por Mim")
+        st.markdown("*Descreva seu produto e a IA monta tudo: estratégia, oferta, preço, copy e anúncio.*")
+
+        produto_fpm = st.text_area("📦 O que você quer vender?", height=100,
+            value=st.session_state.produto_padrao,
+            placeholder="ex: Comedouro artesanal em madeira para pássaros, feito à mão, R$35...", key="mv_a1")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            custo_fpm  = st.number_input("💸 Custo (R$):", value=float(st.session_state.preco_custo), min_value=0.0, key="mestreve73")
+        with col2:
+            preco_fpm  = st.number_input("💰 Preço (R$):", value=float(st.session_state.preco_venda), min_value=0.0, key="mestreve74")
+        with col3:
+            meta_fpm   = st.number_input("🎯 Meta mensal (R$):", value=float(st.session_state.mv_objetivo or 1000), min_value=0.0, key="mestreve75")
+
+        if st.button("🚀 MONTAR MEU KIT COMPLETO", use_container_width=True, key="mestreve76"):
+            if produto_fpm.strip():
+                lucro_fpm = preco_fpm - custo_fpm
+                un_fpm = round(meta_fpm / lucro_fpm) if lucro_fpm > 0 else "?"
+                with st.spinner("A IA está montando seu kit completo... (pode levar alguns segundos)"):
+                    prompt = (
+                        f"Monte um KIT DE LANÇAMENTO COMPLETO para este produto.\n"
+                        f"Produto: {produto_fpm}\n"
+                        f"Custo: R${custo_fpm:.2f} | Preço: R${preco_fpm:.2f} | Lucro/venda: R${lucro_fpm:.2f}\n"
+                        f"Meta: R${meta_fpm:.0f}/mês ({un_fpm} vendas/mês)\n\n"
+                        f"GERE TUDO ABAIXO:\n\n"
+                        f"## 🎯 ESTRATÉGIA\n"
+                        f"- Modelo de venda recomendado e por quê\n"
+                        f"- Canal principal e secundário\n"
+                        f"- Público-alvo em 2 linhas\n\n"
+                        f"## 💰 OFERTA\n"
+                        f"- Oferta A (básica): [preço e o que inclui]\n"
+                        f"- Oferta B (kit): [preço e o que inclui]\n"
+                        f"- Oferta C (premium): [preço e o que inclui]\n"
+                        f"- Oferta recomendada: [qual e por quê]\n\n"
+                        f"## ✍️ COPY\n"
+                        f"- Headline principal:\n"
+                        f"- Descrição para anúncio (150 palavras):\n"
+                        f"- CTA:\n\n"
+                        f"## 📱 CONTEÚDO — 7 POSTS\n"
+                        f"[Post 1 a 7 com tipo e ideia central]\n\n"
+                        f"## 💬 ATENDIMENTO\n"
+                        f"- Resposta para 'Tá caro':\n"
+                        f"- Resposta para 'Vou pensar':\n"
+                        f"- Resposta para 'Qual a garantia?':\n\n"
+                        f"## 🗓️ PLANO DE 30 DIAS\n"
+                        f"Semana 1 — Preparar: [tarefas]\n"
+                        f"Semana 2 — Publicar: [tarefas]\n"
+                        f"Semana 3 — Testar: [tarefas]\n"
+                        f"Semana 4 — Otimizar: [tarefas]\n\n"
+                        f"## 🎯 PRIMEIRA VENDA — O QUE FAZER HOJE:\n[ação concreta para hoje]"
+                    )
+                    res = vendas_ia(prompt)
+                    st.session_state.mv_kit_lancamento = res
+                    salvar_analise("Kit de Lançamento", produto_fpm[:60], res)
+                    st.session_state.produto_padrao = produto_fpm
+                    st.session_state.preco_custo    = custo_fpm
+                    st.session_state.preco_venda    = preco_fpm
+                    st.session_state.mv_objetivo    = meta_fpm
+            else:
+                st.warning("Descreva seu produto.")
+
+        if st.session_state.mv_kit_lancamento:
+            st.markdown("---")
+            st.markdown(st.session_state.mv_kit_lancamento)
+            st.download_button("📋 Baixar kit completo (.txt)",
+                data=st.session_state.mv_kit_lancamento,
+                file_name="kit_lancamento.txt", mime="text/plain", use_container_width=True, key="mv_a0")
+
+        # ──────────────────────────────────────────
+        # KIT DE LANÇAMENTO
+        # ──────────────────────────────────────────
+
+    with _tab_Mentor:
         st.header("🧠 Mentor Estratégico 24h")
         st.markdown("Fale com seu consultor de vendas — direto, sem enrolação, sem teoria.")
 
@@ -1904,439 +2227,7 @@ elif st.session_state.etapa == "App":
                 st.session_state.chat_mentor = []
                 st.rerun()
 
-    # ========================
-    # MATERIAIS SALVOS (acessível no progresso)
-    # ========================
-    if st.session_state.pagina not in [
-        "Home","Diagnostico","ModeloVenda","Oferta","Precificacao","Avatar",
-        "Copy","Conteudo","Criativos","Fechamento","Atendimento","Marketplace",
-        "Loja","Trafego","Local","Escala","Validacao","Auditoria","Estoque","Branding","Mentor"
-    ]:
-        st.info("Selecione um módulo acima.")
-
-    # RODAPÉ COM ESTATÍSTICAS
-    st.markdown("<hr class='divider'>", unsafe_allow_html=True)
-    tipos_count = {}
-    for a in st.session_state.historico_analises:
-        tipos_count[a['tipo']] = tipos_count.get(a['tipo'], 0) + 1
-
-    if st.session_state.materiais_salvos:
-        with st.expander(f"📚 Materiais Salvos ({len(st.session_state.materiais_salvos)}) — clique para ver"):
-            filtro_s = st.selectbox("Filtrar:", ["Todos"] + list(set(m['tipo'] for m in st.session_state.materiais_salvos)), key="filtro_salvos")
-            for i, item in enumerate(reversed(st.session_state.materiais_salvos)):
-                if filtro_s != "Todos" and item['tipo'] != filtro_s:
-                    continue
-                idx_real = len(st.session_state.materiais_salvos) - 1 - i
-                with st.expander(f"[{item['tipo']}] {item.get('produto', '')} — {item['data']}", expanded=False):
-                    st.markdown(f"<div class='card'>{item['conteudo']}</div>", unsafe_allow_html=True)
-                    col_dl, col_del = st.columns([3,1])
-                    with col_dl:
-                        st.download_button("📋 Baixar", data=item['conteudo'],
-                            file_name=f"{item['tipo'].lower().replace(' ','_')}.txt",
-                            mime="text/plain", key=f"dl_salvo_{i}")
-                    with col_del:
-                        if st.button("🗑️", key=f"del_salvo_{i}"):
-                            st.session_state.materiais_salvos.pop(idx_real)
-                            st.rerun()
-
-    # ──────────────────────────────────────────
-    # FUNIL DE VENDAS
-    # ──────────────────────────────────────────
-    elif st.session_state.pagina == "Funil":
-        st.header("📊 Funil de Vendas")
-        st.markdown("*Visualize onde você está perdendo clientes e qual é o maior gargalo.*")
-
-        col1, col2 = st.columns(2)
-        with col1:
-            f_views    = st.number_input("👁️ Pessoas que viram o anúncio:", min_value=0, value=1000, key="mestreve59")
-            f_clicks   = st.number_input("🖱️ Pessoas que clicaram:", min_value=0, value=100, key="mestreve60")
-            f_msgs     = st.number_input("💬 Mandaram mensagem/perguntaram:", min_value=0, value=30, key="mestreve61")
-        with col2:
-            f_vendas   = st.number_input("💰 Compraram:", min_value=0, value=3, key="mestreve62")
-            f_periodo  = st.selectbox("📅 Período:", ["7 dias","15 dias","30 dias","60 dias"], key="mestreve63")
-            f_invest   = st.number_input("💸 Investimento no período (R$):", min_value=0.0, value=0.0, key="mestreve64")
-
-        if st.button("📊 ANALISAR MEU FUNIL", use_container_width=True, key="mestreve65"):
-            with st.spinner("Analisando..."):
-                ctr  = round(f_clicks/f_views*100,1) if f_views>0 else 0
-                conv = round(f_vendas/f_clicks*100,1) if f_clicks>0 else 0
-                cac  = round(f_invest/f_vendas,2) if f_vendas>0 and f_invest>0 else 0
-                receita = f_vendas * st.session_state.preco_venda
-                lucro_f = f_vendas * (st.session_state.preco_venda - st.session_state.preco_custo)
-
-                # Visual do funil
-                st.markdown(f"""
-                <div style='background:#FFF8F0;border:2px solid #F97316;border-radius:14px;padding:20px;margin-bottom:16px;'>
-                    <div style='text-align:center;font-weight:700;color:#C2410C;margin-bottom:16px;'>📊 SEU FUNIL — {f_periodo}</div>
-                    <div style='text-align:center;'><div style='background:#FED7AA;border-radius:8px;padding:10px;margin:4px auto;width:100%;'><strong style='color:#C2410C;'>{f_views:,}</strong> <span style='color:#92400E;font-size:0.85em;'>viram o anúncio</span></div></div>
-                    <div style='text-align:center;color:#C2410C;'>↓ CTR: {ctr}%</div>
-                    <div style='text-align:center;'><div style='background:#FDBA74;border-radius:8px;padding:10px;margin:4px auto;width:{max(10,int(f_clicks/max(f_views,1)*100))}%;'><strong style='color:#9A3412;'>{f_clicks:,}</strong> <span style='color:#92400E;font-size:0.85em;'>clicaram</span></div></div>
-                    <div style='text-align:center;color:#C2410C;'>↓</div>
-                    <div style='text-align:center;'><div style='background:#FB923C;border-radius:8px;padding:10px;margin:4px auto;width:{max(5,int(f_msgs/max(f_views,1)*100))}%;'><strong style='color:#fff;'>{f_msgs:,}</strong> <span style='color:#fff;font-size:0.85em;'>perguntaram</span></div></div>
-                    <div style='text-align:center;color:#C2410C;'>↓ Conversão: {conv}%</div>
-                    <div style='text-align:center;'><div style='background:#C2410C;border-radius:8px;padding:10px;margin:4px auto;width:{max(3,int(f_vendas/max(f_views,1)*100))}%;'><strong style='color:#fff;'>{f_vendas:,}</strong> <span style='color:#fff;font-size:0.85em;'>compraram</span></div></div>
-                </div>
-                """, unsafe_allow_html=True)
-
-                prompt = (
-                    f"Analise este funil de vendas e identifique o maior gargalo.\n"
-                    f"Produto: {st.session_state.produto_padrao}. Período: {f_periodo}.\n"
-                    f"Visualizações: {f_views} | Cliques: {f_clicks} (CTR: {ctr}%)\n"
-                    f"Mensagens: {f_msgs} | Vendas: {f_vendas} (Conversão: {conv}%)\n"
-                    f"Investimento: R${f_invest:.2f} | CAC: R${cac:.2f} | Receita: R${receita:.2f} | Lucro: R${lucro_f:.2f}\n\n"
-                    f"FORMATO:\n\n"
-                    f"📊 ANÁLISE DO FUNIL\n\n"
-                    f"| Métrica | Valor | Benchmark |\n|---|---|---|\n"
-                    f"| CTR | {ctr}% | [referência] |\n"
-                    f"| Taxa de conversão | {conv}% | [referência] |\n"
-                    f"| CAC | R${cac:.2f} | [referência] |\n\n"
-                    f"🔴 MAIOR GARGALO:\n[onde está perdendo mais e por quê]\n\n"
-                    f"🎯 3 AÇÕES PARA MELHORAR O FUNIL:\n[ações específicas e práticas]\n\n"
-                    f"🎯 PRÓXIMA AÇÃO:\n[o que fazer hoje]"
-                )
-                res = vendas_ia(prompt)
-                st.markdown(res)
-                salvar_analise("Funil", st.session_state.produto_padrao, res)
-
-    # ──────────────────────────────────────────
-    # TESTES A/B
-    # ──────────────────────────────────────────
-    elif st.session_state.pagina == "TesteAB":
-        st.header("🧪 Testes A/B")
-        st.markdown("*Compare duas versões e descubra qual converte mais.*")
-
-        tab_criar, tab_hist = st.tabs(["➕ Novo Teste","📋 Histórico"])
-
-        with tab_criar:
-            tipo_ab = st.selectbox("O que você quer testar?", ["Título/Headline","Preço","Oferta","Imagem/Criativo","Copy do anúncio","Descrição do produto"], key="mestreve66")
-            col1, col2 = st.columns(2)
-            with col1:
-                st.markdown("**🅰️ Versão A**")
-                versao_a = st.text_area("Descreva a versão A:", height=100, key="ab_versao_a", placeholder="ex: Preço R$35 com frete grátis")
-                views_a  = st.number_input("👁️ Visualizações A:", min_value=0, value=0, key="ab_views_a")
-                vendas_a = st.number_input("💰 Vendas A:", min_value=0, value=0, key="ab_vendas_a")
-            with col2:
-                st.markdown("**🅱️ Versão B**")
-                versao_b = st.text_area("Descreva a versão B:", height=100, key="ab_versao_b", placeholder="ex: Preço R$39,90 com brinde")
-                views_b  = st.number_input("👁️ Visualizações B:", min_value=0, value=0, key="ab_views_b")
-                vendas_b = st.number_input("💰 Vendas B:", min_value=0, value=0, key="ab_vendas_b")
-
-            if st.button("🏆 ANALISAR E DECLARAR VENCEDORA", use_container_width=True, key="mestreve67"):
-                conv_a = round(vendas_a/views_a*100,2) if views_a>0 else 0
-                conv_b = round(vendas_b/views_b*100,2) if views_b>0 else 0
-                vencedora = "A" if conv_a > conv_b else ("B" if conv_b > conv_a else "Empate")
-                melhora = abs(round((conv_b-conv_a)/max(conv_a,0.01)*100,1))
-
-                st.markdown(f"""
-                <div style='background:{"#F0FDF4" if vencedora=="B" else "#FFF8F0"};border:2px solid {"#059669" if vencedora=="B" else "#C2410C"};border-radius:14px;padding:18px;margin-bottom:16px;text-align:center;'>
-                    <div style='font-size:1.3em;font-weight:700;color:{"#059669" if vencedora=="B" else "#C2410C"};'>🏆 VENCEDORA: VERSÃO {vencedora}</div>
-                    <div style='color:#1A1A2E;margin-top:8px;'>
-                    Versão A: {conv_a}% conversão &nbsp;|&nbsp; Versão B: {conv_b}% conversão<br>
-                    {"Diferença de " + str(melhora) + "% na conversão" if vencedora != "Empate" else "Resultado muito próximo — teste por mais tempo"}
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
-
-                if versao_a and versao_b:
-                    with st.spinner("Analisando..."):
-                        prompt = (
-                            f"Analise este teste A/B de {tipo_ab} para {st.session_state.produto_padrao}.\n"
-                            f"Versão A: {versao_a} — {views_a} views, {vendas_a} vendas ({conv_a}%)\n"
-                            f"Versão B: {versao_b} — {views_b} views, {vendas_b} vendas ({conv_b}%)\n\n"
-                            f"Explique por que uma converteu mais, o que aprender com isso, e o próximo teste a fazer."
-                        )
-                        res_ab = vendas_ia(prompt)
-                        st.markdown(res_ab)
-                        st.session_state.mv_testes_ab.append({
-                            'tipo':tipo_ab,'versao_a':versao_a,'versao_b':versao_b,
-                            'conv_a':conv_a,'conv_b':conv_b,'vencedora':vencedora,
-                            'data':datetime.now().strftime('%d/%m %H:%M')
-                        })
-
-        with tab_hist:
-            testes = st.session_state.mv_testes_ab
-            if not testes:
-                st.info("Nenhum teste realizado ainda.")
-            else:
-                for t in reversed(testes[-10:]):
-                    cor = "#059669" if t['vencedora']=="B" else "#C2410C"
-                    st.markdown(f"<div class='hist-item'><span class='badge'>{t['tipo']}</span> <small style='color:#888;'>{t['data']}</small> — 🏆 <strong style='color:{cor};'>Versão {t['vencedora']}</strong> (A:{t['conv_a']}% × B:{t['conv_b']}%)</div>", unsafe_allow_html=True)
-
-    # ──────────────────────────────────────────
-    # GAMIFICAÇÃO
-    # ──────────────────────────────────────────
-    elif st.session_state.pagina == "Gamificacao":
-        st.header("🎮 Gamificação — Sua Jornada")
-
-        niveis = [
-            ("🥉","Iniciante",0),("🥈","Vendedor",3),("🥇","Estrategista",10),
-            ("💎","Especialista",20),("👑","Mestre de Vendas",50)
-        ]
-        total_analises = len(st.session_state.historico_analises)
-        nivel_atual = "🥉 Iniciante"
-        for emoji, nome, minimo in niveis:
-            if total_analises >= minimo:
-                nivel_atual = f"{emoji} {nome}"
-
-        st.markdown(f"""
-        <div style='background:linear-gradient(135deg,#1C0800,#2D1000);border:2px solid #EA580C;
-        border-radius:16px;padding:24px;text-align:center;margin-bottom:20px;'>
-            <div style='color:#FED7AA;font-size:0.8em;letter-spacing:2px;'>SEU NÍVEL</div>
-            <div style='color:#FED7AA;font-size:2.5em;font-weight:700;margin-top:8px;'>{nivel_atual}</div>
-            <div style='color:#FDBA74;font-size:0.9em;margin-top:8px;'>{total_analises} análises realizadas</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        conquistas_def = [
-            ("🏆","Primeiro produto cadastrado", lambda: bool(st.session_state.produto_padrao)),
-            ("📊","Primeiro diagnóstico", lambda: total_analises >= 1),
-            ("💰","Primeira oferta criada", lambda: any(a['tipo']=='Oferta' for a in st.session_state.historico_analises)),
-            ("📢","Primeiro anúncio criado", lambda: any(a['tipo'] in ['Copy','Criativos'] for a in st.session_state.historico_analises)),
-            ("🧪","Primeiro teste A/B", lambda: len(st.session_state.mv_testes_ab) >= 1),
-            ("🎯","5 análises realizadas", lambda: total_analises >= 5),
-            ("🚀","10 análises realizadas", lambda: total_analises >= 10),
-            ("💎","20 análises realizadas", lambda: total_analises >= 20),
-            ("👑","Mestre — 50 análises", lambda: total_analises >= 50),
-        ]
-
-        st.markdown("### 🏆 Conquistas")
-        cols = st.columns(3)
-        for i, (emoji, nome, condicao) in enumerate(conquistas_def):
-            obtida = condicao()
-            cor = "#C2410C" if obtida else "#E5E7EB"
-            lock = "✅" if obtida else "🔒"
-            with cols[i % 3]:
-                st.markdown(f"""
-                <div style='background:#FFFFFF;border:2px solid {cor};border-radius:12px;
-                padding:12px;text-align:center;margin-bottom:8px;opacity:{"1" if obtida else "0.5"};'>
-                    <div style='font-size:1.5em;'>{emoji}</div>
-                    <div style='font-size:0.78em;font-weight:700;color:#1A1A2E;'>{nome}</div>
-                    <div>{lock}</div>
-                </div>
-                """, unsafe_allow_html=True)
-
-    # ──────────────────────────────────────────
-    # SIMULADOR DE VENDAS
-    # ──────────────────────────────────────────
-    elif st.session_state.pagina == "SimuladorVendas":
-        st.header("🎮 Simulador de Vendas")
-        st.markdown("*A IA vira cliente difícil. Você treina o fechamento antes de enfrentar o real.*")
-
-        if 'sim_chat' not in st.session_state: st.session_state.sim_chat = []
-        if 'sim_ativo' not in st.session_state: st.session_state.sim_ativo = False
-        if 'sim_key' not in st.session_state: st.session_state.sim_key = 0
-
-        if not st.session_state.sim_ativo:
-            col1, col2 = st.columns(2)
-            with col1:
-                perfil_cliente = st.selectbox("🎭 Tipo de cliente:", [
-                    "😤 O que acha caro","🤔 O indeciso","😴 O desinteressado",
-                    "🔍 O que pesquisa muito","😡 O reclamão","💬 O que pede desconto",
-                    "🏃 O que some depois de perguntar"
-                ])
-            with col2:
-                dificuldade = st.selectbox("💪 Dificuldade:", ["Fácil","Médio","Difícil"], key="mestreve68")
-
-            if st.button("🎮 INICIAR SIMULAÇÃO", use_container_width=True, key="mestreve69"):
-                system_sim = (
-                    f"Você é um cliente difícil simulado para treino de vendas.\n"
-                    f"Produto sendo vendido: {st.session_state.produto_padrao} a R${st.session_state.preco_venda:.2f}.\n"
-                    f"Perfil: {perfil_cliente}. Dificuldade: {dificuldade}.\n"
-                    f"Seja realista — use objeções genuínas. Resposta curta (1-2 frases).\n"
-                    f"Nunca revele que é uma IA. Comece com a primeira objeção ou comportamento típico do perfil."
-                )
-                with st.spinner("Preparando cliente..."):
-                    abertura = vendas_ia("Faça sua primeira fala como esse cliente.", system_sim)
-                    st.session_state.sim_chat = [{"role":"assistant","content":abertura,"system":system_sim}]
-                    st.session_state.sim_ativo = True
-                    st.session_state.sim_perfil = perfil_cliente
-                    st.rerun()
-        else:
-            st.markdown(f"**🎭 Cliente:** {st.session_state.get('sim_perfil','')}")
-            for msg in st.session_state.sim_chat:
-                if msg['role']=='user':
-                    st.markdown(f"<div class='card-green' style='padding:10px 14px;'>**Você:** {msg['content']}</div>", unsafe_allow_html=True)
-                else:
-                    st.markdown(f"<div class='card-red' style='padding:10px 14px;'>**🎭 Cliente:** {msg['content']}</div>", unsafe_allow_html=True)
-
-            msg_sim = st.text_input("Sua resposta:", key=f"sim_input_{st.session_state.sim_key}", placeholder="O que você diria?")
-            col_e, col_f = st.columns([4,1])
-            with col_e:
-                if st.button("📤 RESPONDER", use_container_width=True, key="mestreve70"):
-                    if msg_sim.strip():
-                        hist = [{"role":m["role"],"content":m["content"]} for m in st.session_state.sim_chat]
-                        with st.spinner(""):
-                            try:
-                                client = Groq(api_key=st.session_state.api_key)
-                                msgs = [{"role":"system","content":st.session_state.sim_chat[0]["system"]}] + hist + [{"role":"user","content":msg_sim}]
-                                resp = client.chat.completions.create(messages=msgs, model="openai/gpt-oss-120b", max_tokens=100)
-                                resp_txt = resp.choices[0].message.content.strip()
-                            except Exception as e:
-                                resp_txt = f"⚠️ Erro: {e}"
-                        st.session_state.sim_chat.append({"role":"user","content":msg_sim})
-                        st.session_state.sim_chat.append({"role":"assistant","content":resp_txt})
-                        st.session_state.sim_key += 1
-                        st.rerun()
-            with col_f:
-                if st.button("🏁 Avaliar", use_container_width=True, key="mestreve71"):
-                    hist_txt = "\n".join(f"{'Vendedor' if m['role']=='user' else 'Cliente'}: {m['content']}" for m in st.session_state.sim_chat)
-                    with st.spinner("Avaliando..."):
-                        prompt_av = (
-                            f"Avalie a performance do vendedor nesta simulação de vendas.\n"
-                            f"Produto: {st.session_state.produto_padrao}. Cliente: {st.session_state.get('sim_perfil','')}\n\n"
-                            f"Conversa:\n{hist_txt}\n\n"
-                            f"FORMATO:\n\n"
-                            f"| Critério | Nota |\n|---|---|\n"
-                            f"| Clareza | [X]/10 |\n| Persuasão | [X]/10 |\n"
-                            f"| Empatia | [X]/10 |\n| Argumentação | [X]/10 |\n| Fechamento | [X]/10 |\n\n"
-                            f"🏆 NOTA GERAL: [X]/10\n\n"
-                            f"✅ O que foi bem:\n[feedback]\n\n"
-                            f"⚠️ O que melhorar:\n[feedback específico]\n\n"
-                            f"💡 Como você deveria ter respondido:\n[a resposta ideal para o momento mais crítico]"
-                        )
-                        aval = vendas_ia(prompt_av)
-                        salvar_analise("Simulador", st.session_state.produto_padrao, aval)
-                        st.markdown(aval)
-                        st.session_state.sim_ativo = False
-                        st.session_state.sim_chat = []
-
-    # ──────────────────────────────────────────
-    # O QUE FAÇO AGORA?
-    # ──────────────────────────────────────────
-    elif st.session_state.pagina == "OQueFazer":
-        st.header("❓ O Que Faço Agora?")
-        st.markdown("*A IA analisa tudo que você já fez e diz exatamente o próximo passo.*")
-
-        analises_feitas = [a['tipo'] for a in st.session_state.historico_analises]
-        feitos = list(set(analises_feitas))
-
-        etapas = ["Diagnóstico","Modelo de Venda","Oferta","Precificação","Avatar","Copy","Criativos","Marketplace","Tráfego"]
-        nao_feitos = [e for e in etapas if not any(e.lower() in f.lower() for f in feitos)]
-
-        st.markdown(f"""
-        <div style='background:#FFF8F0;border:2px solid #F97316;border-radius:12px;padding:16px;margin-bottom:16px;'>
-            <div style='font-weight:700;color:#C2410C;margin-bottom:8px;'>📊 O QUE VOCÊ JÁ FEZ:</div>
-            {"".join(f"<span class='badge-verde' style='margin:2px;'>✅ {f}</span>" for f in feitos) if feitos else "<span style='color:#888;'>Nenhuma análise ainda</span>"}
-        </div>
-        """, unsafe_allow_html=True)
-
-        if st.button("⚡ QUAL É MEU PRÓXIMO PASSO?", use_container_width=True, key="mestreve72"):
-            with st.spinner("Analisando sua situação..."):
-                prompt = (
-                    f"Analise o progresso deste vendedor e diga exatamente o que fazer agora.\n"
-                    f"Produto: {st.session_state.produto_padrao}.\n"
-                    f"Custo: R${st.session_state.preco_custo}. Preço: R${st.session_state.preco_venda}.\n"
-                    f"Já fez: {', '.join(feitos) if feitos else 'nada ainda'}.\n"
-                    f"Ainda não fez: {', '.join(nao_feitos)}.\n\n"
-                    f"FORMATO:\n\n"
-                    f"⚡ SUA PRÓXIMA AÇÃO\n\n"
-                    f"Faça: [ação específica e concreta]\n\n"
-                    f"Por quê? [razão objetiva baseada no que já foi feito]\n\n"
-                    f"Como fazer: [passo a passo simples]\n\n"
-                    f"Tempo estimado: [X minutos]\n\n"
-                    f"Resultado esperado: [o que vai acontecer]\n\n"
-                    f"Depois disso: [qual será o próximo passo após essa ação]"
-                )
-                res = vendas_ia(prompt)
-                st.markdown(f"<div class='card-blue'>{res}</div>", unsafe_allow_html=True)
-
-    # ──────────────────────────────────────────
-    # FAÇA POR MIM
-    # ──────────────────────────────────────────
-    elif st.session_state.pagina == "FazPorMim":
-        st.header("🤖 Faça Por Mim")
-        st.markdown("*Descreva seu produto e a IA monta tudo: estratégia, oferta, preço, copy e anúncio.*")
-
-        produto_fpm = st.text_area("📦 O que você quer vender?", height=100,
-            value=st.session_state.produto_padrao,
-            placeholder="ex: Comedouro artesanal em madeira para pássaros, feito à mão, R$35...")
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            custo_fpm  = st.number_input("💸 Custo (R$):", value=float(st.session_state.preco_custo), min_value=0.0, key="mestreve73")
-        with col2:
-            preco_fpm  = st.number_input("💰 Preço (R$):", value=float(st.session_state.preco_venda), min_value=0.0, key="mestreve74")
-        with col3:
-            meta_fpm   = st.number_input("🎯 Meta mensal (R$):", value=float(st.session_state.mv_objetivo or 1000), min_value=0.0, key="mestreve75")
-
-        if st.button("🚀 MONTAR MEU KIT COMPLETO", use_container_width=True, key="mestreve76"):
-            if produto_fpm.strip():
-                lucro_fpm = preco_fpm - custo_fpm
-                un_fpm = round(meta_fpm / lucro_fpm) if lucro_fpm > 0 else "?"
-                with st.spinner("A IA está montando seu kit completo... (pode levar alguns segundos)"):
-                    prompt = (
-                        f"Monte um KIT DE LANÇAMENTO COMPLETO para este produto.\n"
-                        f"Produto: {produto_fpm}\n"
-                        f"Custo: R${custo_fpm:.2f} | Preço: R${preco_fpm:.2f} | Lucro/venda: R${lucro_fpm:.2f}\n"
-                        f"Meta: R${meta_fpm:.0f}/mês ({un_fpm} vendas/mês)\n\n"
-                        f"GERE TUDO ABAIXO:\n\n"
-                        f"## 🎯 ESTRATÉGIA\n"
-                        f"- Modelo de venda recomendado e por quê\n"
-                        f"- Canal principal e secundário\n"
-                        f"- Público-alvo em 2 linhas\n\n"
-                        f"## 💰 OFERTA\n"
-                        f"- Oferta A (básica): [preço e o que inclui]\n"
-                        f"- Oferta B (kit): [preço e o que inclui]\n"
-                        f"- Oferta C (premium): [preço e o que inclui]\n"
-                        f"- Oferta recomendada: [qual e por quê]\n\n"
-                        f"## ✍️ COPY\n"
-                        f"- Headline principal:\n"
-                        f"- Descrição para anúncio (150 palavras):\n"
-                        f"- CTA:\n\n"
-                        f"## 📱 CONTEÚDO — 7 POSTS\n"
-                        f"[Post 1 a 7 com tipo e ideia central]\n\n"
-                        f"## 💬 ATENDIMENTO\n"
-                        f"- Resposta para 'Tá caro':\n"
-                        f"- Resposta para 'Vou pensar':\n"
-                        f"- Resposta para 'Qual a garantia?':\n\n"
-                        f"## 🗓️ PLANO DE 30 DIAS\n"
-                        f"Semana 1 — Preparar: [tarefas]\n"
-                        f"Semana 2 — Publicar: [tarefas]\n"
-                        f"Semana 3 — Testar: [tarefas]\n"
-                        f"Semana 4 — Otimizar: [tarefas]\n\n"
-                        f"## 🎯 PRIMEIRA VENDA — O QUE FAZER HOJE:\n[ação concreta para hoje]"
-                    )
-                    res = vendas_ia(prompt)
-                    st.session_state.mv_kit_lancamento = res
-                    salvar_analise("Kit de Lançamento", produto_fpm[:60], res)
-                    st.session_state.produto_padrao = produto_fpm
-                    st.session_state.preco_custo    = custo_fpm
-                    st.session_state.preco_venda    = preco_fpm
-                    st.session_state.mv_objetivo    = meta_fpm
-            else:
-                st.warning("Descreva seu produto.")
-
-        if st.session_state.mv_kit_lancamento:
-            st.markdown("---")
-            st.markdown(st.session_state.mv_kit_lancamento)
-            st.download_button("📋 Baixar kit completo (.txt)",
-                data=st.session_state.mv_kit_lancamento,
-                file_name="kit_lancamento.txt", mime="text/plain", use_container_width=True)
-
-    # ──────────────────────────────────────────
-    # KIT DE LANÇAMENTO
-    # ──────────────────────────────────────────
-    elif st.session_state.pagina == "KitLancamento":
-        st.header("🚀 Kit de Lançamento")
-
-        if st.session_state.mv_kit_lancamento:
-            st.success("✅ Seu kit está pronto!")
-            st.markdown(st.session_state.mv_kit_lancamento)
-            col_dl, col_novo = st.columns(2)
-            with col_dl:
-                st.download_button("📋 Baixar kit (.txt)", data=st.session_state.mv_kit_lancamento,
-                    file_name="kit_lancamento.txt", mime="text/plain", use_container_width=True)
-            with col_novo:
-                if st.button("🔄 Gerar novo kit", use_container_width=True, key="mestreve77"):
-                    st.session_state.mv_kit_lancamento = None; st.rerun()
-        else:
-            st.info("Você ainda não gerou um kit. Vá para **🤖 Faça Por Mim** e monte seu kit completo.")
-            if st.button("🤖 IR PARA FAÇA POR MIM", use_container_width=True, key="mestreve78"):
-                st.session_state.pagina = "FazPorMim"; st.rerun()
-
-    # ──────────────────────────────────────────
-    # MEU NEGÓCIO — HISTÓRICO
-    # ──────────────────────────────────────────
-    elif st.session_state.pagina == "MeuNegocio":
+    with _tab_MeuNegocio:
         st.header("📚 Meu Negócio — Histórico")
         st.markdown("*Todas as análises, copies, ofertas e planos gerados.*")
 
@@ -2355,10 +2246,11 @@ elif st.session_state.etapa == "App":
                         file_name=f"{a['tipo']}_{a['data'].replace('/','-').replace(' ','_')}.txt",
                         mime="text/plain", key=f"dl_hist_{i}")
 
-    # ──────────────────────────────────────────
-    # MATERIAIS SALVOS
-    # ──────────────────────────────────────────
-    elif st.session_state.pagina == "Salvos":
+        # ──────────────────────────────────────────
+        # MATERIAIS SALVOS
+        # ──────────────────────────────────────────
+
+    with _tab_Salvos:
         st.header("💾 Materiais Salvos")
         salvos = st.session_state.materiais_salvos
         if not salvos:
@@ -2375,6 +2267,13 @@ elif st.session_state.etapa == "App":
                         if st.button("🗑️", key=f"del_salvo_{i}"):
                             idx = len(salvos) - 1 - i
                             st.session_state.materiais_salvos.pop(idx); st.rerun()
+
+        # --- RODAPÉ ---
+        st.markdown(
+        "<div style='text-align:center;color:#999;font-size:0.8em;margin-top:40px;'>"
+        "© 2026 Mestre de Vendas Físicas IA — O canivete suíço do vendedor brasileiro · Quiz Com Prêmios"
+        "</div>", unsafe_allow_html=True
+        )
 
 # --- RODAPÉ ---
 st.markdown(
