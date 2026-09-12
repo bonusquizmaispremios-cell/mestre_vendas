@@ -241,7 +241,7 @@ if 'mv_testes_ab' not in st.session_state: st.session_state['mv_testes_ab'] = []
 
 if st.session_state.etapa == "Login":
     st.markdown("# 🤖 MESTRE DE VENDAS FÍSICAS")
-    st.markdown("<div class=\'card\'><b>🔒 ACESSO RESTRITO A CLIENTES DO QUIZ COM PRÊMIOS</b><br>🔗 quizcompremios.com.br</div>", unsafe_allow_html=True)
+    st.markdown("<div class=\'card\'><b>🔒 ACESSO RESTRITO A CLIENTES DO QUIZ COM PRÊMIOS</b><br>🔗 <a href='https://quizcompremios.com.br' target='_blank' style='color:#4F46E5;font-weight:700;text-decoration:underline;'>quizcompremios.com.br</a></div>", unsafe_allow_html=True)
     st.info("💻 **Dica:** Pela complexidade dos agentes, no computador a experiência é mais agradável.")
     with st.container():
         nome  = st.text_input("Seu Nome:", key="nome_login")
@@ -266,6 +266,27 @@ elif st.session_state.etapa == "App":
 
     # TABS — navegação nativa
     (_tab_Home, _tab_Diagnostico, _tab_ModeloVenda, _tab_Oferta, _tab_Precificacao, _tab_Avatar, _tab_Copy, _tab_Conteudo, _tab_Criativos, _tab_Fechamento, _tab_Atendimento, _tab_Marketplace, _tab_Loja, _tab_Trafego, _tab_Local, _tab_Escala, _tab_Validacao, _tab_Auditoria, _tab_Estoque, _tab_Branding, _tab_Funil, _tab_TesteAB, _tab_Gamificacao, _tab_SimuladorVendas, _tab_KitLancamento, _tab_OQueFazer, _tab_FazPorMim, _tab_Mentor, _tab_MeuNegocio, _tab_Salvos) = st.tabs(['🏠 Painel', '🧠 Diagnóstico', '🎯 Modelo Venda', '🛒 Oferta', '💰 Preço', '👤 Avatar', '✍️ Copy', '📱 Conteúdo', '🎥 Criativos', '💬 Fechamento', '🤖 Atendimento', '🛍️ Marketplace', '🌐 Loja Virtual', '📢 Tráfego', '📍 Local', '📈 Escalar', '🧪 Validação', '📊 Auditoria', '📦 Estoque', '💎 Branding', '🔬 Funil', '🧪 Testes A/B', '🎮 Gamificação', '🎯 Simulador', '🚀 Lançamento', '❓ O que fazer?', '🤖 Faz por mim', '🧠 Mentor 24h', '📚 Meu Negócio', '💾 Salvos'])
+
+    # ── BARRA SALVAR — aparece em todas as abas ──
+    with st.expander("💾 Salvar / Carregar meus dados", expanded=False):
+        _bsc1, _bsc2 = st.columns(2)
+        with _bsc1:
+            import json as _jsv
+            _dsv = {k: st.session_state.get(k) for k in list(st.session_state.keys()) if not k.startswith('_') and k not in ('api_key',)}
+            st.download_button("💾 Baixar meus dados (.json)",
+                data=_jsv.dumps(_dsv, ensure_ascii=False, indent=2, default=str),
+                file_name=f"dados_{st.session_state.get('usuario','user')}.json",
+                mime="application/json", key="dl_barra_sv_mestreve")
+        with _bsc2:
+            _fupsv = st.file_uploader("📂 Carregar dados salvos:", type=["json"], key="ul_barra_sv_mestreve", label_visibility="collapsed")
+            if _fupsv:
+                try:
+                    import json as _jld
+                    for _k2,_v2 in _jld.loads(_fupsv.read().decode()).items():
+                        if _k2 not in ('api_key','etapa'): st.session_state[_k2] = _v2
+                    st.success("✅ Dados restaurados!"); st.rerun()
+                except: st.error("Arquivo inválido.")
+
 
     with _tab_Home:
         col_u, col_r = st.columns([3, 1])
@@ -345,6 +366,27 @@ elif st.session_state.etapa == "App":
         # ========================
         # DIAGNÓSTICO
         # ========================
+
+        st.markdown("<hr class='divider'>", unsafe_allow_html=True)
+        st.markdown("### 💾 Salvar e Carregar Dados")
+        _csl1, _csl2 = st.columns(2)
+        with _csl1:
+            import json as _json_sv
+            _dados_sv = {k: st.session_state.get(k) for k in list(st.session_state.keys()) if not k.startswith('_')}
+            st.download_button("💾 Salvar dados (.json)",
+                data=_json_sv.dumps(_dados_sv, ensure_ascii=False, indent=2, default=str),
+                file_name=f"dados_{st.session_state.get('usuario','user')}.json",
+                mime="application/json", key="dl_sv_mestreve")
+        with _csl2:
+            _arq_sv = st.file_uploader("📂 Carregar dados:", type=["json"], key="ul_sv_mestreve")
+            if _arq_sv:
+                try:
+                    import json as _json_ld
+                    for _k, _v in _json_ld.loads(_arq_sv.read().decode()).items():
+                        st.session_state[_k] = _v
+                    st.success("✅ Dados carregados!")
+                    st.rerun()
+                except: st.error("Arquivo inválido.")
 
     with _tab_Diagnostico:
         st.header("🧠 Diagnóstico Inteligente do Negócio")
